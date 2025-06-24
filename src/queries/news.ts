@@ -1,4 +1,4 @@
-import { buildQuery } from './_query-builder';
+import { buildQuery } from '../_query-builder';
 import { z } from 'zod';
 
 export const NewsAPI = {

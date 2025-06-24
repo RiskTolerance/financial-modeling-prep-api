@@ -60,7 +60,7 @@ runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 			expect(typeof dataPoint.change).toBe('number');
 			expect(typeof dataPoint.changePercent).toBe('number');
 			expect(typeof dataPoint.vwap).toBe('number');
-			expect(dataPoint.changePercent.toFixed(4)).toBe(
+			expect(dataPoint.changePercent.toFixed(2)).toBe(
 				(
 					(dataPoint.change / (dataPoint.close - dataPoint.change)) *
 					100

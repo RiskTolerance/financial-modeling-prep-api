@@ -11,9 +11,7 @@ export default defineConfig({
 	},
 	resolve: {
 		alias: {
-			'#apis': path.resolve(__dirname, './src/apis'),
-			'#agents': path.resolve(__dirname, './src/mastra/agents'),
-			'#tools': path.resolve(__dirname, './src/mastra/tools'),
+			'#apis': path.resolve(__dirname, './src/queries'),
 		},
 	},
 });
