@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { EconomicsAPI, EconomicIndicatorNameOptions } from './economics';
+import { EconomicsAPI, EconomicIndicatorNameOptions } from './economics.js';
 import dayjs from 'dayjs';
 
 // Skip all tests if FMP_API_KEY is not set

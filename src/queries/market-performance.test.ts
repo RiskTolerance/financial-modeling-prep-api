@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { MarketPerformanceAPI } from './market-performance';
-import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils';
+import { MarketPerformanceAPI } from './market-performance.js';
+import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils.js';
 
 const TEST_EXCHANGE = 'NASDAQ';
 const TEST_SECTOR = 'Technology';

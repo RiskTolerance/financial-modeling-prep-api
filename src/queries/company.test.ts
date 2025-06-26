@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { CompanyAPI } from './company';
+import { CompanyAPI } from './company.js';
 
 // Skip all tests if FMP_API_KEY is not set
 const runTests = process.env.FMP_API_KEY ? describe : describe.skip;

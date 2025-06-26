@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { StatementsAPI } from './statements';
-import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils';
+import { StatementsAPI } from './statements.js';
+import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils.js';
 
 const TEST_SYMBOL = 'AAPL';
 const TEST_LIMIT = 1;

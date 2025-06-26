@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { InsiderTradesAPI } from './insider-trades';
-import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils';
+import { InsiderTradesAPI } from './insider-trades.js';
+import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils.js';
 
 const TEST_SYMBOL = 'AAPL';
 const TEST_OPTIONS = {

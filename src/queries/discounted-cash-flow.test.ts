@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { DiscountedCashFlowAPI } from './discounted-cash-flow';
-import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils';
+import { DiscountedCashFlowAPI } from './discounted-cash-flow.js';
+import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils.js';
 
 const TEST_SYMBOL = 'AAPL';
 

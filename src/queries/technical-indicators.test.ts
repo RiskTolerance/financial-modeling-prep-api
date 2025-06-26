@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { TechnicalAPI } from './technical-indicators';
+import { TechnicalAPI } from './technical-indicators.js';
 import dayjs from 'dayjs';
 
 // Skip all tests if FMP_API_KEY is not set

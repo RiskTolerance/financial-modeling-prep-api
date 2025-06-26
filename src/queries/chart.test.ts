@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ChartAPI } from './chart';
+import { ChartAPI } from './chart.js';
 import dayjs from 'dayjs';
 
 // Skip all tests if FMP_API_KEY is not set
