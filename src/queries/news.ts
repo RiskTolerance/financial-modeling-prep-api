@@ -1,5 +1,4 @@
 import { buildQuery } from '../_query-builder';
-import { z } from 'zod';
 
 export const NewsAPI = {
 	/**
@@ -20,7 +19,7 @@ export const NewsAPI = {
 		});
 		const response = await fetch(query);
 		const data = await response.json();
-		return StockNewsArrSchema.parse(data);
+		return data;
 	},
 
 	/**
@@ -41,7 +40,7 @@ export const NewsAPI = {
 		});
 		const response = await fetch(query);
 		const data = await response.json();
-		return PressReleaseArrSchema.parse(data);
+		return data;
 	},
 
 	// The following endpoints are technically under the analyst catagory, but they fit in the news catagory better.
@@ -59,7 +58,7 @@ export const NewsAPI = {
 		});
 		const response = await fetch(query);
 		const data = await response.json();
-		return PriceTargetNewsArrSchema.parse(data);
+		return data;
 	},
 
 	/**
@@ -75,69 +74,62 @@ export const NewsAPI = {
 		});
 		const response = await fetch(query);
 		const data = await response.json();
-		return StockGradeNewsArrSchema.parse(data);
+		return data;
 	},
 };
 
-// ZOD SCHEMAS ------------------------------------------------------------
+// VANILLA TYPESCRIPT TYPES ------------------------------------------------------------
 
-const StockNewsSchema = z.object({
-	symbol: z.string(),
-	publishedDate: z.coerce.date(),
-	publisher: z.string(),
-	title: z.string(),
-	image: z.string(),
-	site: z.string(),
-	text: z.string(),
-	url: z.string(),
-});
-export const StockNewsArrSchema = z.array(StockNewsSchema);
+export interface StockNews {
+	symbol: string;
+	publishedDate: string | Date;
+	publisher: string;
+	title: string;
+	image: string;
+	site: string;
+	text: string;
+	url: string;
+}
+export type StockNewsArr = StockNews[];
 
-const PressReleaseSchema = z.object({
-	symbol: z.string(),
-	publishedDate: z.coerce.date(),
-	publisher: z.string(),
-	title: z.string(),
-	image: z.string(),
-	site: z.string(),
-	text: z.string(),
-	url: z.string(),
-});
-export const PressReleaseArrSchema = z.array(PressReleaseSchema);
+export interface PressRelease {
+	symbol: string;
+	publishedDate: string | Date;
+	publisher: string;
+	title: string;
+	image: string;
+	site: string;
+	text: string;
+	url: string;
+}
+export type PressReleaseArr = PressRelease[];
 
-const PriceTargetNewsSchema = z.object({
-	symbol: z.string(),
-	publishedDate: z.coerce.date(),
-	newsURL: z.string(),
-	newsTitle: z.string(),
-	analystName: z.string(),
-	priceTarget: z.number(),
-	adjPriceTarget: z.number(),
-	priceWhenPosted: z.number(),
-	newsPublisher: z.string(),
-	newsBaseURL: z.string(),
-	analystCompany: z.string(),
-});
-export const PriceTargetNewsArrSchema = z.array(PriceTargetNewsSchema);
+export interface PriceTargetNews {
+	symbol: string;
+	publishedDate: string | Date;
+	newsURL: string;
+	newsTitle: string;
+	analystName: string;
+	priceTarget: number;
+	adjPriceTarget: number;
+	priceWhenPosted: number;
+	newsPublisher: string;
+	newsBaseURL: string;
+	analystCompany: string;
+}
+export type PriceTargetNewsArr = PriceTargetNews[];
 
-const StockGradeNewsSchema = z.object({
-	symbol: z.string(),
-	publishedDate: z.coerce.date(),
-	newsURL: z.string(),
-	newsTitle: z.string(),
-	newsBaseURL: z.string(),
-	newsPublisher: z.string(),
-	newGrade: z.string(),
-	previousGrade: z.string().nullable(),
-	gradingCompany: z.string(),
-	action: z.string(),
-	priceWhenPosted: z.number(),
-});
-export const StockGradeNewsArrSchema = z.array(StockGradeNewsSchema);
-
-// ZOD-INFERRED TYPES ------------------------------------------------------------
-
-export type StockNewsArr = z.infer<typeof StockNewsArrSchema>;
-export type PressReleaseArr = z.infer<typeof PressReleaseArrSchema>;
-export type PriceTargetNewsArr = z.infer<typeof PriceTargetNewsArrSchema>;
-export type StockGradeNewsArr = z.infer<typeof StockGradeNewsArrSchema>;
+export interface StockGradeNews {
+	symbol: string;
+	publishedDate: string | Date;
+	newsURL: string;
+	newsTitle: string;
+	newsBaseURL: string;
+	newsPublisher: string;
+	newGrade: string;
+	previousGrade: string | null;
+	gradingCompany: string;
+	action: string;
+	priceWhenPosted: number;
+}
+export type StockGradeNewsArr = StockGradeNews[];
