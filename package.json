@@ -4,12 +4,14 @@
   "description": "A WIP TypeScript SDK for the Financial Modeling Prep API.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RiskTolerance/financial-modeling-prep-api"
+    "url": "git+https://github.com/RiskTolerance/financial-modeling-prep-api.git"
   },
   "scripts": {
     "build": "tsc",
