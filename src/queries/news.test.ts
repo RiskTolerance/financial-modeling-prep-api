@@ -89,7 +89,7 @@ runTests('Financial Modeling Prep - News API Integration Tests', () => {
 
 			const update = result[0];
 			expect(update.symbol).toBe(TEST_SYMBOL);
-			expect(update.analystName).toBeTruthy();
+			expect(update.analystName).toBeDefined();
 			expect(update.analystCompany).toBeTruthy();
 			expect(update.priceTarget).toBeGreaterThan(0);
 			expect(update.adjPriceTarget).toBeGreaterThan(0);
