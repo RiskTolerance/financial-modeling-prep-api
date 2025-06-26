@@ -1,4 +1,4 @@
-import { buildQuery } from '../_query-builder.ts';
+import { buildQuery } from '../_query-builder';
 
 export const InsiderTradesAPI = {
 	async searchInsiderTrades({
