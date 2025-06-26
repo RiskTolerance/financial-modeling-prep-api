@@ -1,13 +1,16 @@
 import { describe, it, expect } from 'vitest';
 import { DirectoryAPI } from './directory.js';
 
+const apiKey = process.env.FMP_API_KEY!;
+const directoryApi = DirectoryAPI(apiKey);
+
 // Skip all tests if FMP_API_KEY is not set
 const runTests = process.env.FMP_API_KEY ? describe : describe.skip;
 
 runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 	describe('Company Symbol List', () => {
 		it('should fetch company symbols', async () => {
-			const result = await DirectoryAPI.companySymbolList();
+			const result = await directoryApi.companySymbolList();
 
 			expect(Array.isArray(result)).toBe(true);
 			expect(result.length).toBeGreaterThan(0);
@@ -21,7 +24,7 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 			expect(company.companyName).not.toBe('');
 
 			// Check for well-known companies
-			const appleEntry = result.find((c) => c.symbol === 'AAPL');
+			const appleEntry = result.find((c: any) => c.symbol === 'AAPL');
 			expect(appleEntry).toBeDefined();
 			expect(appleEntry?.companyName).toContain('Apple');
 		});
@@ -29,7 +32,7 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 
 	describe('Company Financial Symbol List', () => {
 		it('should fetch financial symbols', async () => {
-			const result = await DirectoryAPI.companyFinancialSymbolList();
+			const result = await directoryApi.companyFinancialSymbolList();
 
 			expect(Array.isArray(result)).toBe(true);
 			expect(result.length).toBeGreaterThan(0);
@@ -48,7 +51,7 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 
 	describe('Actively Trading List', () => {
 		it('should fetch actively trading companies', async () => {
-			const result = await DirectoryAPI.activelyTradingList();
+			const result = await directoryApi.activelyTradingList();
 
 			expect(Array.isArray(result)).toBe(true);
 			expect(result.length).toBeGreaterThan(0);
@@ -62,7 +65,7 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 			expect(company.name).not.toBe('');
 
 			// Ensure major companies are in the active list
-			const hasActiveCompanies = result.some((c) =>
+			const hasActiveCompanies = result.some((c: any) =>
 				['AAPL', 'MSFT', 'GOOGL', 'AMZN'].includes(c.symbol)
 			);
 			expect(hasActiveCompanies).toBe(true);
@@ -71,7 +74,7 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 
 	describe('Available Sectors', () => {
 		it('should fetch available sectors', async () => {
-			const result = await DirectoryAPI.availableSectors();
+			const result = await directoryApi.availableSectors();
 
 			expect(Array.isArray(result)).toBe(true);
 			expect(result.length).toBeGreaterThan(0);
@@ -83,7 +86,7 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 
 			// Check for common sectors
 			const commonSectors = ['Technology', 'Healthcare', 'Financial Services'];
-			const hasSomeSectors = result.some((s) =>
+			const hasSomeSectors = result.some((s: any) =>
 				commonSectors.some((common) => s.sector.includes(common))
 			);
 			expect(hasSomeSectors).toBe(true);
@@ -92,7 +95,7 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 
 	describe('Available Industries', () => {
 		it('should fetch available industries', async () => {
-			const result = await DirectoryAPI.availableIndustries();
+			const result = await directoryApi.availableIndustries();
 
 			expect(Array.isArray(result)).toBe(true);
 			expect(result.length).toBeGreaterThan(0);
@@ -104,7 +107,7 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 
 			// Check for common industries
 			const commonIndustries = ['Software', 'Banks', 'Biotechnology'];
-			const hasSomeIndustries = result.some((i) =>
+			const hasSomeIndustries = result.some((i: any) =>
 				commonIndustries.some((common) => i.industry.includes(common))
 			);
 			expect(hasSomeIndustries).toBe(true);
@@ -113,23 +116,21 @@ runTests('Financial Modeling Prep - Directory API Integration Tests', () => {
 
 	describe('Data Consistency', () => {
 		it('should have more industries than sectors', async () => {
-			const sectors = await DirectoryAPI.availableSectors();
-			const industries = await DirectoryAPI.availableIndustries();
+			const sectors = await directoryApi.availableSectors();
+			const industries = await directoryApi.availableIndustries();
 
 			expect(industries.length).toBeGreaterThan(sectors.length);
 		});
 
 		it('should have actively trading symbols in the main symbol list', async () => {
-			const allSymbols = await DirectoryAPI.companySymbolList();
-			const activeSymbols = await DirectoryAPI.activelyTradingList();
+			const allSymbols = await directoryApi.companySymbolList();
+			const activeSymbols = await directoryApi.activelyTradingList();
 
 			// Take a sample of active symbols and verify they're in the main list
-			const sampleSize = Math.min(10, activeSymbols.length);
-			const sample = activeSymbols.slice(0, sampleSize);
-
-			sample.forEach((activeCompany) => {
-				const found = allSymbols.some((s) => s.symbol === activeCompany.symbol);
-				expect(found).toBe(true);
+			activeSymbols.slice(0, 10).forEach((activeCompany: any) => {
+				expect(
+					allSymbols.some((s: any) => s.symbol === activeCompany.symbol)
+				).toBe(true);
 			});
 		});
 	});

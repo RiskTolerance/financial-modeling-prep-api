@@ -1,46 +1,43 @@
 import { buildQuery } from '../_query-builder.js';
 
-export const CompanyAPI = {
-	async profile(symbol: string): Promise<CompanyProfileArr> {
-		const query = buildQuery('profile', {
-			symbol,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+export function CompanyAPI(apiKey: string) {
+	return {
+		async profile(symbol: string): Promise<CompanyProfileArr> {
+			const query = buildQuery('profile', { symbol }, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async employeeCount(
-		symbol: string,
-		limit: number
-	): Promise<CompanyEmployeeCountArr> {
-		const query = buildQuery('employee-count', {
-			symbol,
-			limit,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async employeeCount(
+			symbol: string,
+			limit: number
+		): Promise<CompanyEmployeeCountArr> {
+			const query = buildQuery('employee-count', { symbol, limit }, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async historicalEmployeeCount(
-		symbol: string,
-		limit: number
-	): Promise<HistoricalCompanyEmployeeCountArr> {
-		const query = buildQuery('historical-employee-count', {
-			symbol,
-			limit,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async historicalEmployeeCount(
+			symbol: string,
+			limit: number
+		): Promise<HistoricalCompanyEmployeeCountArr> {
+			const query = buildQuery(
+				'historical-employee-count',
+				{ symbol, limit },
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async marketCap(symbol: string): Promise<CompanyMarketCapArr> {
-		const query = buildQuery('market-capitalization', {
-			symbol,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
-};
+		async marketCap(symbol: string): Promise<CompanyMarketCapArr> {
+			const query = buildQuery('market-capitalization', { symbol }, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
+
 export interface CompanyProfile {
 	symbol: string;
 	price: number;
@@ -79,7 +76,9 @@ export interface CompanyProfile {
 	isAdr: boolean;
 	isFund: boolean;
 }
+
 export type CompanyProfileArr = CompanyProfile[];
+
 export interface CompanyEmployeeCount {
 	symbol: string;
 	cik: string;
@@ -91,7 +90,9 @@ export interface CompanyEmployeeCount {
 	employeeCount: number;
 	source: string;
 }
+
 export type CompanyEmployeeCountArr = CompanyEmployeeCount[];
+
 export interface HistoricalCompanyEmployeeCount {
 	symbol: string;
 	cik: string;
@@ -103,11 +104,14 @@ export interface HistoricalCompanyEmployeeCount {
 	employeeCount: number;
 	source: string;
 }
+
 export type HistoricalCompanyEmployeeCountArr =
 	HistoricalCompanyEmployeeCount[];
+
 export interface CompanyMarketCap {
 	symbol: string;
 	date: Date;
 	marketCap: number;
 }
+
 export type CompanyMarketCapArr = CompanyMarketCap[];

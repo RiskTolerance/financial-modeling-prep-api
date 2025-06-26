@@ -1,173 +1,227 @@
 import { buildQuery } from '../_query-builder.js';
 
-export const StatementsAPI = {
-	async incomeStatement(
-		symbol: string,
-		options: {
-			limit: number;
-			period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4';
-		}
-	): Promise<IncomeStatementArr> {
-		const query = buildQuery('income-statement', {
-			symbol,
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+export function StatementsAPI(apiKey: string) {
+	return {
+		async incomeStatement(
+			symbol: string,
+			options: {
+				limit: number;
+				period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4';
+			}
+		): Promise<IncomeStatementArr> {
+			const query = buildQuery(
+				'income-statement',
+				{
+					symbol,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async balanceSheet(
-		symbol: string,
-		options: {
-			limit: number;
-			period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4';
-		}
-	): Promise<BalanceSheetArr> {
-		const query = buildQuery('balance-sheet-statement', {
-			symbol,
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async balanceSheet(
+			symbol: string,
+			options: {
+				limit: number;
+				period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4';
+			}
+		): Promise<BalanceSheetArr> {
+			const query = buildQuery(
+				'balance-sheet-statement',
+				{
+					symbol,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async cashFlowStatement(
-		symbol: string,
-		options: {
-			limit: number;
-			period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4';
-		}
-	): Promise<CashFlowStatementArr> {
-		const query = buildQuery('cash-flow-statement', {
-			symbol,
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async cashFlowStatement(
+			symbol: string,
+			options: {
+				limit: number;
+				period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4';
+			}
+		): Promise<CashFlowStatementArr> {
+			const query = buildQuery(
+				'cash-flow-statement',
+				{
+					symbol,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async keyMetrics(
-		symbol: string,
-		options: {
-			limit: number;
-			period: 'annual';
-		}
-	): Promise<KeyMetricsArr> {
-		const query = buildQuery('key-metrics', {
-			symbol,
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async keyMetrics(
+			symbol: string,
+			options: {
+				limit: number;
+				period: 'annual';
+			}
+		): Promise<KeyMetricsArr> {
+			const query = buildQuery(
+				'key-metrics',
+				{
+					symbol,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async financialRatios(
-		symbol: string,
-		options: {
-			limit: number;
-			period: 'annual';
-		}
-	): Promise<FinancialRatiosArr> {
-		const query = buildQuery('financial-ratios', {
-			symbol,
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async financialRatios(
+			symbol: string,
+			options: {
+				limit: number;
+				period: 'annual';
+			}
+		): Promise<FinancialRatiosArr> {
+			const query = buildQuery(
+				'financial-ratios',
+				{
+					symbol,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async keyMetricsTtm(symbol: string): Promise<KeyMetricsTtmArr> {
-		const query = buildQuery('key-metrics-ttm', {
-			symbol,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async keyMetricsTtm(symbol: string): Promise<KeyMetricsTtmArr> {
+			const query = buildQuery(
+				'key-metrics-ttm',
+				{
+					symbol,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async financialRatiosTtm(symbol: string): Promise<FinancialRatiosTtmArr> {
-		const query = buildQuery('ratios-ttm', {
-			symbol,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async financialRatiosTtm(symbol: string): Promise<FinancialRatiosTtmArr> {
+			const query = buildQuery(
+				'ratios-ttm',
+				{
+					symbol,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async financialScores(symbol: string): Promise<FinancialScoresArr> {
-		const query = buildQuery('financial-scores', {
-			symbol,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async financialScores(symbol: string): Promise<FinancialScoresArr> {
+			const query = buildQuery(
+				'financial-scores',
+				{
+					symbol,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async ownerEarnings(
-		symbol: string,
-		limit: number
-	): Promise<OwnerEarningsArr> {
-		const query = buildQuery('owner-earnings', {
-			symbol,
-			limit,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async ownerEarnings(
+			symbol: string,
+			limit: number
+		): Promise<OwnerEarningsArr> {
+			const query = buildQuery(
+				'owner-earnings',
+				{
+					symbol,
+					limit,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async enterpriseValues(
-		symbol: string,
-		limit: number,
-		period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4'
-	): Promise<EnterpriseValuesArr> {
-		const query = buildQuery('enterprise-values', {
-			symbol,
-			limit,
-			period,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async enterpriseValues(
+			symbol: string,
+			limit: number,
+			period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4'
+		): Promise<EnterpriseValuesArr> {
+			const query = buildQuery(
+				'enterprise-values',
+				{
+					symbol,
+					limit,
+					period,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async incomeStatementGrowth(
-		symbol: string,
-		limit: number,
-		period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4'
-	): Promise<IncomeStatementGrowthArr> {
-		const query = buildQuery('income-statement-growth', {
-			symbol,
-			limit,
-			period,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async incomeStatementGrowth(
+			symbol: string,
+			limit: number,
+			period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4'
+		): Promise<IncomeStatementGrowthArr> {
+			const query = buildQuery(
+				'income-statement-growth',
+				{
+					symbol,
+					limit,
+					period,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async balanceSheetGrowth(
-		symbol: string,
-		limit: number,
-		period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4'
-	): Promise<BalanceSheetStatementGrowthArr> {
-		const query = buildQuery('balance-sheet-statement-growth', {
-			symbol,
-			limit,
-			period,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async balanceSheetGrowth(
+			symbol: string,
+			limit: number,
+			period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4'
+		): Promise<BalanceSheetStatementGrowthArr> {
+			const query = buildQuery(
+				'balance-sheet-statement-growth',
+				{
+					symbol,
+					limit,
+					period,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async cashFlowStatementGrowth(
-		symbol: string,
-		limit: number,
-		period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4'
-	): Promise<CashflowStatementGrowthArr> {
-		const query = buildQuery('cash-flow-statement-growth', {
-			symbol,
-			limit,
-			period,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
-};
+		async cashFlowStatementGrowth(
+			symbol: string,
+			limit: number,
+			period: 'annual' | 'quarter' | 'Q1' | 'Q2' | 'Q3' | 'Q4'
+		): Promise<CashflowStatementGrowthArr> {
+			const query = buildQuery(
+				'cash-flow-statement-growth',
+				{
+					symbol,
+					limit,
+					period,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
 
 export interface IncomeStatement {
 	date: Date;

@@ -1,4 +1,8 @@
-export const buildQuery = (endpoint: string, options: Record<string, any>) => {
+export const buildQuery = (
+	endpoint: string,
+	options: Record<string, any>,
+	apiKey: string
+) => {
 	const baseUrl = `https://financialmodelingprep.com/stable/${endpoint}`;
 	let queryParamString = '';
 	(() => {
@@ -8,8 +12,7 @@ export const buildQuery = (endpoint: string, options: Record<string, any>) => {
 			}
 		}
 	})();
-	const KEY = process.env.FMP_API_KEY;
-	const query = `${baseUrl}?${queryParamString}&apikey=${KEY}`;
+	const query = `${baseUrl}?${queryParamString}&apikey=${apiKey}`;
 	console.log(query);
 	return query;
 };

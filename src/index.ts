@@ -11,17 +11,19 @@ import { SearchAPI } from './queries/search.js';
 import { StatementsAPI } from './queries/statements.js';
 import { TechnicalAPI } from './queries/technical-indicators.js';
 
-export const FmpApi = {
-	Analyst: AnalystAPI,
-	Chart: ChartAPI,
-	Company: CompanyAPI,
-	DiscountedCashFlow: DiscountedCashFlowAPI,
-	Directory: DirectoryAPI,
-	Economics: EconomicsAPI,
-	InsiderTrades: InsiderTradesAPI,
-	MarketPerformance: MarketPerformanceAPI,
-	News: NewsAPI,
-	Search: SearchAPI,
-	Statements: StatementsAPI,
-	Technical: TechnicalAPI,
-};
+export function createFmpApi(apiKey: string) {
+	return {
+		Analyst: AnalystAPI(apiKey),
+		Chart: ChartAPI(apiKey),
+		Company: CompanyAPI(apiKey),
+		DiscountedCashFlow: DiscountedCashFlowAPI(apiKey),
+		Directory: DirectoryAPI(apiKey),
+		Economics: EconomicsAPI(apiKey),
+		InsiderTrades: InsiderTradesAPI(apiKey),
+		MarketPerformance: MarketPerformanceAPI(apiKey),
+		News: NewsAPI(apiKey),
+		Search: SearchAPI(apiKey),
+		Statements: StatementsAPI(apiKey),
+		Technical: TechnicalAPI(apiKey),
+	};
+}

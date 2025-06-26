@@ -2,6 +2,9 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { MarketPerformanceAPI } from './market-performance.js';
 import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils.js';
 
+const apiKey = process.env.FMP_API_KEY!;
+const marketApi = MarketPerformanceAPI(apiKey);
+
 const TEST_EXCHANGE = 'NASDAQ';
 const TEST_SECTOR = 'Technology';
 const TEST_INDUSTRY = 'Software - Application';
@@ -82,7 +85,7 @@ describe('MarketPerformanceAPI', () => {
 
 	it('should fetch market sector performance history', async () => {
 		const fetchMock = mockFetch(mockMarketSectorPerformance);
-		const result = await MarketPerformanceAPI.marketSectorPerformanceHistory(
+		const result = await marketApi.marketSectorPerformanceHistory(
 			TEST_FROM,
 			TEST_TO,
 			TEST_EXCHANGE,
@@ -94,7 +97,7 @@ describe('MarketPerformanceAPI', () => {
 
 	it('should fetch industry performance history', async () => {
 		const fetchMock = mockFetch(mockIndustryPerformance);
-		const result = await MarketPerformanceAPI.industryPerformanceHistory({
+		const result = await marketApi.industryPerformanceHistory({
 			options: {
 				from: TEST_FROM,
 				to: TEST_TO,
@@ -108,7 +111,7 @@ describe('MarketPerformanceAPI', () => {
 
 	it('should fetch sector price/earnings history', async () => {
 		const fetchMock = mockFetch(mockSectorPE);
-		const result = await MarketPerformanceAPI.sectorPriceEarningsHistory({
+		const result = await marketApi.sectorPriceEarningsHistory({
 			options: {
 				date: TEST_DATE,
 				exchange: TEST_EXCHANGE,
@@ -121,7 +124,7 @@ describe('MarketPerformanceAPI', () => {
 
 	it('should fetch industry price/earnings history', async () => {
 		const fetchMock = mockFetch(mockIndustryPE);
-		const result = await MarketPerformanceAPI.industryPriceEarningsHistory({
+		const result = await marketApi.industryPriceEarningsHistory({
 			options: {
 				from: TEST_FROM,
 				to: TEST_TO,
@@ -135,21 +138,21 @@ describe('MarketPerformanceAPI', () => {
 
 	it('should fetch biggest losers', async () => {
 		const fetchMock = mockFetch(mockBiggestLosers);
-		const result = await MarketPerformanceAPI.biggestLosers();
+		const result = await marketApi.biggestLosers();
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockBiggestLosers);
 	});
 
 	it('should fetch biggest gainers', async () => {
 		const fetchMock = mockFetch(mockBiggestGainers);
-		const result = await MarketPerformanceAPI.biggestGainers();
+		const result = await marketApi.biggestGainers();
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockBiggestGainers);
 	});
 
 	it('should fetch most active', async () => {
 		const fetchMock = mockFetch(mockMostActive);
-		const result = await MarketPerformanceAPI.mostActive();
+		const result = await marketApi.mostActive();
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockMostActive);
 	});
@@ -158,7 +161,7 @@ describe('MarketPerformanceAPI', () => {
 		const error = new Error('Network error');
 		const spy = vi.spyOn(global, 'fetch').mockRejectedValue(error);
 		await expect(
-			MarketPerformanceAPI.marketSectorPerformanceHistory(
+			marketApi.marketSectorPerformanceHistory(
 				TEST_FROM,
 				TEST_TO,
 				TEST_EXCHANGE,

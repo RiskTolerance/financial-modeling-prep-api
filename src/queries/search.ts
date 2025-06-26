@@ -1,40 +1,42 @@
 import { buildQuery } from '../_query-builder.js';
 
-export const SearchAPI = {
-	/**
-	 * Returns all stocks that match the screeners criteria
-	 * @param options - The options for the stock screener.
-	 * @param options.marketCapMoreThan - The minimum market cap for the stocks.
-	 * @param options.marketCapLessThan - The maximum market cap for the stocks.
-	 * @param options.sector - The sector for the stocks.
-	 * @param options.industry - The industry for the stocks.
-	 * @param options.betaMoreThan - The minimum beta for the stocks.
-	 * @param options.betaLowerThan - The maximum beta for the stocks.
-	 * @param options.priceMoreThan - The minimum price for the stocks.
-	 * @param options.priceLowerThan - The maximum price for the stocks.
-	 * @param options.dividendMoreThan - The minimum dividend for the stocks.
-	 * @param options.dividendLowerThan - The maximum dividend for the stocks.
-	 * @param options.volumeMoreThan - The minimum volume for the stocks.
-	 * @param options.volumeLowerThan - The maximum volume for the stocks.
-	 * @param options.exchange - The exchange for the stocks.
-	 * @param options.country - The country for the stocks.
-	 * @param options.isEtf - Whether the stocks are ETFs.
-	 * @param options.isFund - Whether the stocks are funds.
-	 * @param options.isActivelyTrading - Whether the stocks are actively trading.
-	 * @param options.limit - The number of stocks to return.
-	 * @param options.includeAllShareClasses - Whether to include all share classes.
-	 * @returns The stocks that match the screeners criteria.
-	 */
-	async stockScreener<S extends MarketSector = MarketSector>({
-		options,
-	}: {
-		options: ScreenerOptions<S>;
-	}): Promise<ScreenerResultArr> {
-		const query = buildQuery('company-screener', options);
-		const response = await fetch(query);
-		return await response.json();
-	},
-};
+export function SearchAPI(apiKey: string) {
+	return {
+		/**
+		 * Returns all stocks that match the screeners criteria
+		 * @param options - The options for the stock screener.
+		 * @param options.marketCapMoreThan - The minimum market cap for the stocks.
+		 * @param options.marketCapLessThan - The maximum market cap for the stocks.
+		 * @param options.sector - The sector for the stocks.
+		 * @param options.industry - The industry for the stocks.
+		 * @param options.betaMoreThan - The minimum beta for the stocks.
+		 * @param options.betaLowerThan - The maximum beta for the stocks.
+		 * @param options.priceMoreThan - The minimum price for the stocks.
+		 * @param options.priceLowerThan - The maximum price for the stocks.
+		 * @param options.dividendMoreThan - The minimum dividend for the stocks.
+		 * @param options.dividendLowerThan - The maximum dividend for the stocks.
+		 * @param options.volumeMoreThan - The minimum volume for the stocks.
+		 * @param options.volumeLowerThan - The maximum volume for the stocks.
+		 * @param options.exchange - The exchange for the stocks.
+		 * @param options.country - The country for the stocks.
+		 * @param options.isEtf - Whether the stocks are ETFs.
+		 * @param options.isFund - Whether the stocks are funds.
+		 * @param options.isActivelyTrading - Whether the stocks are actively trading.
+		 * @param options.limit - The number of stocks to return.
+		 * @param options.includeAllShareClasses - Whether to include all share classes.
+		 * @returns The stocks that match the screeners criteria.
+		 */
+		async stockScreener<S extends MarketSector = MarketSector>({
+			options,
+		}: {
+			options: ScreenerOptions<S>;
+		}): Promise<ScreenerResultArr> {
+			const query = buildQuery('company-screener', options, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
 
 interface ScreenerResult {
 	symbol: string;

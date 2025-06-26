@@ -2,6 +2,9 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { StatementsAPI } from './statements.js';
 import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils.js';
 
+const apiKey = process.env.FMP_API_KEY!;
+const statementsApi = StatementsAPI(apiKey);
+
 const TEST_SYMBOL = 'AAPL';
 const TEST_LIMIT = 1;
 const TEST_PERIOD = 'annual';
@@ -112,7 +115,7 @@ describe('StatementsAPI', () => {
 
 	it('should fetch income statement', async () => {
 		const fetchMock = mockFetch(mockIncomeStatement);
-		const result = await StatementsAPI.incomeStatement(TEST_SYMBOL, {
+		const result = await statementsApi.incomeStatement(TEST_SYMBOL, {
 			limit: TEST_LIMIT,
 			period: TEST_PERIOD,
 		});
@@ -122,7 +125,7 @@ describe('StatementsAPI', () => {
 
 	it('should fetch balance sheet', async () => {
 		const fetchMock = mockFetch(mockBalanceSheet);
-		const result = await StatementsAPI.balanceSheet(TEST_SYMBOL, {
+		const result = await statementsApi.balanceSheet(TEST_SYMBOL, {
 			limit: TEST_LIMIT,
 			period: TEST_PERIOD,
 		});
@@ -132,7 +135,7 @@ describe('StatementsAPI', () => {
 
 	it('should fetch cash flow statement', async () => {
 		const fetchMock = mockFetch(mockCashFlowStatement);
-		const result = await StatementsAPI.cashFlowStatement(TEST_SYMBOL, {
+		const result = await statementsApi.cashFlowStatement(TEST_SYMBOL, {
 			limit: TEST_LIMIT,
 			period: TEST_PERIOD,
 		});
@@ -142,7 +145,7 @@ describe('StatementsAPI', () => {
 
 	it('should fetch key metrics', async () => {
 		const fetchMock = mockFetch(mockKeyMetrics);
-		const result = await StatementsAPI.keyMetrics(TEST_SYMBOL, {
+		const result = await statementsApi.keyMetrics(TEST_SYMBOL, {
 			limit: TEST_LIMIT,
 			period: 'annual',
 		});
@@ -152,7 +155,7 @@ describe('StatementsAPI', () => {
 
 	it('should fetch financial ratios', async () => {
 		const fetchMock = mockFetch(mockFinancialRatios);
-		const result = await StatementsAPI.financialRatios(TEST_SYMBOL, {
+		const result = await statementsApi.financialRatios(TEST_SYMBOL, {
 			limit: TEST_LIMIT,
 			period: 'annual',
 		});
@@ -162,35 +165,35 @@ describe('StatementsAPI', () => {
 
 	it('should fetch key metrics TTM', async () => {
 		const fetchMock = mockFetch(mockKeyMetricsTtm);
-		const result = await StatementsAPI.keyMetricsTtm(TEST_SYMBOL);
+		const result = await statementsApi.keyMetricsTtm(TEST_SYMBOL);
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockKeyMetricsTtm);
 	});
 
 	it('should fetch financial ratios TTM', async () => {
 		const fetchMock = mockFetch(mockFinancialRatiosTtm);
-		const result = await StatementsAPI.financialRatiosTtm(TEST_SYMBOL);
+		const result = await statementsApi.financialRatiosTtm(TEST_SYMBOL);
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockFinancialRatiosTtm);
 	});
 
 	it('should fetch financial scores', async () => {
 		const fetchMock = mockFetch(mockFinancialScores);
-		const result = await StatementsAPI.financialScores(TEST_SYMBOL);
+		const result = await statementsApi.financialScores(TEST_SYMBOL);
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockFinancialScores);
 	});
 
 	it('should fetch owner earnings', async () => {
 		const fetchMock = mockFetch(mockOwnerEarnings);
-		const result = await StatementsAPI.ownerEarnings(TEST_SYMBOL, TEST_LIMIT);
+		const result = await statementsApi.ownerEarnings(TEST_SYMBOL, TEST_LIMIT);
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockOwnerEarnings);
 	});
 
 	it('should fetch enterprise values', async () => {
 		const fetchMock = mockFetch(mockEnterpriseValues);
-		const result = await StatementsAPI.enterpriseValues(
+		const result = await statementsApi.enterpriseValues(
 			TEST_SYMBOL,
 			TEST_LIMIT,
 			TEST_PERIOD
@@ -201,7 +204,7 @@ describe('StatementsAPI', () => {
 
 	it('should fetch income statement growth', async () => {
 		const fetchMock = mockFetch(mockIncomeStatementGrowth);
-		const result = await StatementsAPI.incomeStatementGrowth(
+		const result = await statementsApi.incomeStatementGrowth(
 			TEST_SYMBOL,
 			TEST_LIMIT,
 			TEST_PERIOD
@@ -212,7 +215,7 @@ describe('StatementsAPI', () => {
 
 	it('should fetch balance sheet growth', async () => {
 		const fetchMock = mockFetch(mockBalanceSheetGrowth);
-		const result = await StatementsAPI.balanceSheetGrowth(
+		const result = await statementsApi.balanceSheetGrowth(
 			TEST_SYMBOL,
 			TEST_LIMIT,
 			TEST_PERIOD
@@ -223,7 +226,7 @@ describe('StatementsAPI', () => {
 
 	it('should fetch cash flow statement growth', async () => {
 		const fetchMock = mockFetch(mockCashFlowStatementGrowth);
-		const result = await StatementsAPI.cashFlowStatementGrowth(
+		const result = await statementsApi.cashFlowStatementGrowth(
 			TEST_SYMBOL,
 			TEST_LIMIT,
 			TEST_PERIOD
@@ -236,7 +239,7 @@ describe('StatementsAPI', () => {
 		const error = new Error('Network error');
 		const spy = vi.spyOn(global, 'fetch').mockRejectedValue(error);
 		await expect(
-			StatementsAPI.incomeStatement(TEST_SYMBOL, {
+			statementsApi.incomeStatement(TEST_SYMBOL, {
 				limit: TEST_LIMIT,
 				period: TEST_PERIOD,
 			})

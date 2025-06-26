@@ -15,7 +15,7 @@
     "url": "git+https://github.com/RiskTolerance/financial-modeling-prep-api.git"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && find dist -name '*.test.js' -delete && find dist -name '*.test.d.ts' -delete",
     "test": "vitest run"
   },
   "dependencies": {

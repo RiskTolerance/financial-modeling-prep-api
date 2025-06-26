@@ -1,24 +1,30 @@
 import { buildQuery } from '../_query-builder.js';
 
-export const EconomicsAPI = {
-	async treasuryRates(): Promise<TreasuryRatesArr> {
-		const query = buildQuery('treasury-rates', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
+export function EconomicsAPI(apiKey: string) {
+	return {
+		async treasuryRates() {
+			const query = buildQuery('treasury-rates', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async economicIndicators(
-		name: EconomicIndicatorNameOptions,
-		options: { from: Date; to: Date }
-	): Promise<EconomicIndicatorsArr> {
-		const query = buildQuery('economic-indicators', {
-			name,
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
-};
+		async economicIndicators(
+			name: EconomicIndicatorNameOptions,
+			options: { from: Date; to: Date }
+		) {
+			const query = buildQuery(
+				'economic-indicators',
+				{
+					name,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
 
 export interface TreasuryRate {
 	date: Date;

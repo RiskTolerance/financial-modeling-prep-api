@@ -1,16 +1,22 @@
 import { buildQuery } from '../_query-builder.js';
 
-export const InsiderTradesAPI = {
-	async searchInsiderTrades({
-		options,
-	}: {
-		options: InsiderTradeQueryOptions;
-	}): Promise<InsiderTradesArr> {
-		const query = buildQuery('insider-trading/search', { ...options });
-		const response = await fetch(query);
-		return await response.json();
-	},
-};
+export function InsiderTradesAPI(apiKey: string) {
+	return {
+		async searchInsiderTrades({
+			options,
+		}: {
+			options: InsiderTradeQueryOptions;
+		}): Promise<InsiderTradesArr> {
+			const query = buildQuery(
+				'insider-trading/search',
+				{ ...options },
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
 
 type InsiderTradeQueryOptions = {
 	symbol?: string;

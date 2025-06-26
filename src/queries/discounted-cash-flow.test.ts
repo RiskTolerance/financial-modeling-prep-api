@@ -2,6 +2,9 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { DiscountedCashFlowAPI } from './discounted-cash-flow.js';
 import { mockFetch, resetFetchMocks } from '../../test/utils/api-test-utils.js';
 
+const apiKey = process.env.FMP_API_KEY!;
+const dcfApi = DiscountedCashFlowAPI(apiKey);
+
 const TEST_SYMBOL = 'AAPL';
 
 const mockDcfValuation = [
@@ -32,14 +35,14 @@ describe('DiscountedCashFlowAPI', () => {
 
 	it('should fetch DCF valuation', async () => {
 		const fetchMock = mockFetch(mockDcfValuation);
-		const result = await DiscountedCashFlowAPI.dcfValuation(TEST_SYMBOL);
+		const result = await dcfApi.dcfValuation(TEST_SYMBOL);
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockDcfValuation);
 	});
 
 	it('should fetch levered DCF', async () => {
 		const fetchMock = mockFetch(mockLeveredDcf);
-		const result = await DiscountedCashFlowAPI.leveredDcf(TEST_SYMBOL);
+		const result = await dcfApi.leveredDcf(TEST_SYMBOL);
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockLeveredDcf);
 	});
@@ -48,9 +51,9 @@ describe('DiscountedCashFlowAPI', () => {
 		// Simulate fetch throwing
 		const error = new Error('Network error');
 		const spy = vi.spyOn(global, 'fetch').mockRejectedValue(error);
-		await expect(
-			DiscountedCashFlowAPI.dcfValuation(TEST_SYMBOL)
-		).rejects.toThrow('Network error');
+		await expect(dcfApi.dcfValuation(TEST_SYMBOL)).rejects.toThrow(
+			'Network error'
+		);
 		spy.mockRestore();
 	});
 });

@@ -2,6 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { NewsAPI } from './news.js';
 import dayjs from 'dayjs';
 
+const apiKey = process.env.FMP_API_KEY!;
+const newsApi = NewsAPI(apiKey);
+
 // Skip all tests if FMP_API_KEY is not set
 const runTests = process.env.FMP_API_KEY ? describe : describe.skip;
 
@@ -12,7 +15,7 @@ runTests('Financial Modeling Prep - News API Integration Tests', () => {
 
 	describe('Stock News', () => {
 		it('should fetch stock news for a symbol', async () => {
-			const result = await NewsAPI.stockNews(TEST_SYMBOL, {
+			const result = await newsApi.stockNews(TEST_SYMBOL, {
 				from: TEST_FROM,
 				to: TEST_TO,
 				page: 0,
@@ -32,14 +35,14 @@ runTests('Financial Modeling Prep - News API Integration Tests', () => {
 		});
 
 		it('should handle pagination correctly', async () => {
-			const page1 = await NewsAPI.stockNews(TEST_SYMBOL, {
+			const page1 = await newsApi.stockNews(TEST_SYMBOL, {
 				from: TEST_FROM,
 				to: TEST_TO,
 				page: 0,
 				limit: 5,
 			});
 
-			const page2 = await NewsAPI.stockNews(TEST_SYMBOL, {
+			const page2 = await newsApi.stockNews(TEST_SYMBOL, {
 				from: TEST_FROM,
 				to: TEST_TO,
 				page: 1,
@@ -59,7 +62,7 @@ runTests('Financial Modeling Prep - News API Integration Tests', () => {
 
 	describe('Press Releases', () => {
 		it('should fetch press releases for a symbol', async () => {
-			const result = await NewsAPI.pressReleases(TEST_SYMBOL, {
+			const result = await newsApi.pressReleases(TEST_SYMBOL, {
 				from: TEST_FROM,
 				to: TEST_TO,
 				page: 0,
@@ -81,7 +84,7 @@ runTests('Financial Modeling Prep - News API Integration Tests', () => {
 
 	describe('Price Target News', () => {
 		it('should fetch price target updates', async () => {
-			const result = await NewsAPI.priceTargetNews(TEST_SYMBOL, 10);
+			const result = await newsApi.priceTargetNews(TEST_SYMBOL, 10);
 
 			expect(Array.isArray(result)).toBe(true);
 			expect(result.length).toBeGreaterThan(0);
@@ -100,7 +103,7 @@ runTests('Financial Modeling Prep - News API Integration Tests', () => {
 
 	describe('Stock Grade News', () => {
 		it('should fetch analyst grade updates', async () => {
-			const result = await NewsAPI.stockGradeNews(TEST_SYMBOL, {
+			const result = await newsApi.stockGradeNews(TEST_SYMBOL, {
 				page: 0,
 				limit: 10,
 			});
@@ -119,12 +122,12 @@ runTests('Financial Modeling Prep - News API Integration Tests', () => {
 		});
 
 		it('should handle pagination correctly', async () => {
-			const page1 = await NewsAPI.stockGradeNews(TEST_SYMBOL, {
+			const page1 = await newsApi.stockGradeNews(TEST_SYMBOL, {
 				page: 0,
 				limit: 5,
 			});
 
-			const page2 = await NewsAPI.stockGradeNews(TEST_SYMBOL, {
+			const page2 = await newsApi.stockGradeNews(TEST_SYMBOL, {
 				page: 1,
 				limit: 5,
 			});

@@ -1,82 +1,96 @@
 import { buildQuery } from '../_query-builder.js';
 
-export const NewsAPI = {
-	/**
-	 * @returns The stock news for the given symbol.
-	 */
-	async stockNews(
-		symbol: string,
-		options: {
-			from: Date;
-			to: Date;
-			page: number;
-			limit: number;
-		}
-	): Promise<StockNewsArr> {
-		const query = buildQuery('news/stock', {
-			symbol,
-			...options,
-		});
-		const response = await fetch(query);
-		const data = await response.json();
-		return data;
-	},
+export function NewsAPI(apiKey: string) {
+	return {
+		/**
+		 * @returns The stock news for the given symbol.
+		 */
+		async stockNews(
+			symbol: string,
+			options: {
+				from: Date;
+				to: Date;
+				page: number;
+				limit: number;
+			}
+		): Promise<StockNewsArr> {
+			const query = buildQuery(
+				'news/stock',
+				{
+					symbol,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	/**
-	 * @returns The press releases for the given symbol.
-	 */
-	async pressReleases(
-		symbol: string,
-		options: {
-			from: Date;
-			to: Date;
-			page: number;
-			limit: number;
-		}
-	): Promise<PressReleaseArr> {
-		const query = buildQuery('press-releases', {
-			symbol,
-			...options,
-		});
-		const response = await fetch(query);
-		const data = await response.json();
-		return data;
-	},
+		/**
+		 * @returns The press releases for the given symbol.
+		 */
+		async pressReleases(
+			symbol: string,
+			options: {
+				from: Date;
+				to: Date;
+				page: number;
+				limit: number;
+			}
+		): Promise<PressReleaseArr> {
+			const query = buildQuery(
+				'press-releases',
+				{
+					symbol,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	// The following endpoints are technically under the analyst catagory, but they fit in the news catagory better.
+		// The following endpoints are technically under the analyst catagory, but they fit in the news catagory better.
 
-	/**
-	 * @returns The price target news for the given symbol.
-	 */
-	async priceTargetNews(
-		symbol: string,
-		limit: number
-	): Promise<PriceTargetNewsArr> {
-		const query = buildQuery('price-target-news', {
-			symbol,
-			limit,
-		});
-		const response = await fetch(query);
-		const data = await response.json();
-		return data;
-	},
+		/**
+		 * @returns The price target news for the given symbol.
+		 */
+		async priceTargetNews(
+			symbol: string,
+			limit: number
+		): Promise<PriceTargetNewsArr> {
+			const query = buildQuery(
+				'price-target-news',
+				{
+					symbol,
+					limit,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	/**
-	 * @returns The stock grade news for the given symbol.
-	 */
-	async stockGradeNews(
-		symbol: string,
-		options: { page: number; limit: number }
-	): Promise<StockGradeNewsArr> {
-		const query = buildQuery('grades-news', {
-			symbol,
-			...options,
-		});
-		const response = await fetch(query);
-		const data = await response.json();
-		return data;
-	},
-};
+		/**
+		 * @returns The stock grade news for the given symbol.
+		 */
+		async stockGradeNews(
+			symbol: string,
+			options: { page: number; limit: number }
+		): Promise<StockGradeNewsArr> {
+			const query = buildQuery(
+				'grades-news',
+				{
+					symbol,
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
 
 // VANILLA TYPESCRIPT TYPES ------------------------------------------------------------
 

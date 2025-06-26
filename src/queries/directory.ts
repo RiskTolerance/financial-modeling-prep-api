@@ -1,32 +1,35 @@
 import { buildQuery } from '../_query-builder.js';
 
-export const DirectoryAPI = {
-	async companySymbolList(): Promise<CompanySymbolArr> {
-		const query = buildQuery('stock-list', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
-	async companyFinancialSymbolList(): Promise<CompanyFinancialSymbolArr> {
-		const query = buildQuery('financial-statement-symbol-list', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
-	async activelyTradingList(): Promise<ActivelyTradingArr> {
-		const query = buildQuery('actively-trading-list', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
-	async availableSectors(): Promise<SectorArr> {
-		const query = buildQuery('available-sectors', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
-	async availableIndustries(): Promise<IndustryArr> {
-		const query = buildQuery('available-industries', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
-};
+export function DirectoryAPI(apiKey: string) {
+	return {
+		async companySymbolList() {
+			const query = buildQuery('stock-list', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
+		async companyFinancialSymbolList() {
+			const query = buildQuery('financial-statement-symbol-list', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
+		async activelyTradingList() {
+			const query = buildQuery('actively-trading-list', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
+		async availableSectors() {
+			const query = buildQuery('available-sectors', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
+		async availableIndustries() {
+			const query = buildQuery('available-industries', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
+
 export interface CompanySymbol {
 	symbol: string;
 	companyName: string;

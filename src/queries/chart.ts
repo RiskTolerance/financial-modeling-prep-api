@@ -1,90 +1,106 @@
 import { buildQuery } from '../_query-builder.js';
 import dayjs from 'dayjs';
 
-export const ChartAPI = {
-	async light(
-		symbol: string,
-		options: {
-			from: Date;
-			to: Date;
-		}
-	): Promise<ChartLightArr> {
-		const query = buildQuery('historical-price-eod/light', {
-			symbol,
-			from: dayjs(options.from).format('YYYY-MM-DD'),
-			to: dayjs(options.to).format('YYYY-MM-DD'),
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+export function ChartAPI(apiKey: string) {
+	return {
+		async light(
+			symbol: string,
+			options: {
+				from: Date;
+				to: Date;
+			}
+		): Promise<ChartLightArr> {
+			const query = buildQuery(
+				'historical-price-eod/light',
+				{ symbol, ...options },
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async full(
-		symbol: string,
-		options: {
-			from: Date;
-			to: Date;
-		}
-	): Promise<ChartFullArr> {
-		const query = buildQuery('historical-price-eod/full', {
-			symbol,
-			from: dayjs(options.from).format('YYYY-MM-DD'),
-			to: dayjs(options.to).format('YYYY-MM-DD'),
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async full(
+			symbol: string,
+			options: {
+				from: Date;
+				to: Date;
+			}
+		): Promise<ChartFullArr> {
+			const query = buildQuery(
+				'historical-price-eod/full',
+				{ symbol, ...options },
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async unadjustedStockPrice(
-		symbol: string,
-		options: {
-			from: Date;
-			to: Date;
-		}
-	): Promise<UnadjustedStockPriceArr> {
-		const query = buildQuery('historical-price-eod/non-split-adjusted', {
-			symbol,
-			from: dayjs(options.from).format('YYYY-MM-DD'),
-			to: dayjs(options.to).format('YYYY-MM-DD'),
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async unadjustedStockPrice(
+			symbol: string,
+			options: {
+				from: Date;
+				to: Date;
+			}
+		): Promise<UnadjustedStockPriceArr> {
+			const query = buildQuery(
+				'historical-price-eod/non-split-adjusted',
+				{ symbol, ...options },
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async dividendAdjustedStockPrice(
-		symbol: string,
-		options: {
-			from: Date;
-			to: Date;
-		}
-	): Promise<DividendAdjustedStockPriceArr> {
-		const query = buildQuery('historical-price-eod/dividend-adjusted', {
-			symbol,
-			from: dayjs(options.from).format('YYYY-MM-DD'),
-			to: dayjs(options.to).format('YYYY-MM-DD'),
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async dividendAdjustedStockPrice(
+			symbol: string,
+			options: {
+				from: Date;
+				to: Date;
+			}
+		): Promise<DividendAdjustedStockPriceArr> {
+			const query = buildQuery(
+				'historical-price-eod/dividend-adjusted',
+				{ symbol, ...options },
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async stockPriceInterval(
-		symbol: string,
-		interval: '5min' | '15min' | '30min' | '1hour' | '4hour',
-		options: {
-			from: Date;
-			to: Date;
-			nonadjusted?: boolean;
-		}
-	): Promise<StockPriceIntervalArr> {
-		const query = buildQuery(`historical-chart/${interval}`, {
-			symbol,
-			from: dayjs(options.from).format('YYYY-MM-DD'),
-			to: dayjs(options.to).format('YYYY-MM-DD'),
-			nonadjusted: options.nonadjusted,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
-};
+		async stockPriceInterval(
+			symbol: string,
+			interval: '5min' | '15min' | '30min' | '1hour' | '4hour',
+			options: {
+				from: Date;
+				to: Date;
+				nonadjusted?: boolean;
+			}
+		): Promise<StockPriceIntervalArr> {
+			const query = buildQuery(
+				`historical-chart/${interval}`,
+				{
+					symbol,
+					from: dayjs(options.from).format('YYYY-MM-DD'),
+					to: dayjs(options.to).format('YYYY-MM-DD'),
+					nonadjusted: options.nonadjusted,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
+
+		async stockPriceInRange(symbol: string, options: { from: Date; to: Date }) {
+			const query = buildQuery(
+				'stock-price-in-range',
+				{ symbol, ...options },
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
 
 export interface ChartLight {
 	symbol: string;

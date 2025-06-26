@@ -15,77 +15,95 @@ export type SectorOptions<S extends MarketSector = MarketSector> = {
 	sector: S;
 };
 
-export const MarketPerformanceAPI = {
-	async marketSectorPerformanceHistory(
-		from: Date,
-		to: Date,
-		exchange: 'NASDAQ' | 'NYSE' | 'AMEX',
-		sector: MarketSector
-	): Promise<MarketSectorPerformanceArr> {
-		const query = buildQuery('historical-sector-performance', {
-			from,
-			to,
-			exchange,
-			sector,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+export function MarketPerformanceAPI(apiKey: string) {
+	return {
+		async marketSectorPerformanceHistory(
+			from: Date,
+			to: Date,
+			exchange: 'NASDAQ' | 'NYSE' | 'AMEX',
+			sector: MarketSector
+		): Promise<MarketSectorPerformanceArr> {
+			const query = buildQuery(
+				'historical-sector-performance',
+				{
+					from,
+					to,
+					exchange,
+					sector,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async industryPerformanceHistory<S extends MarketSector = MarketSector>({
-		options,
-	}: {
-		options: IndustryOptions<S>;
-	}): Promise<IndustryPerformanceArr> {
-		const query = buildQuery('historical-industry-performance', {
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async industryPerformanceHistory<S extends MarketSector = MarketSector>({
+			options,
+		}: {
+			options: IndustryOptions<S>;
+		}): Promise<IndustryPerformanceArr> {
+			const query = buildQuery(
+				'historical-industry-performance',
+				{
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async sectorPriceEarningsHistory<S extends MarketSector = MarketSector>({
-		options,
-	}: {
-		options: SectorOptions<S>;
-	}): Promise<SectorPriceEarningsArr> {
-		const query = buildQuery('historical-sector-pe', {
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async sectorPriceEarningsHistory<S extends MarketSector = MarketSector>({
+			options,
+		}: {
+			options: SectorOptions<S>;
+		}): Promise<SectorPriceEarningsArr> {
+			const query = buildQuery(
+				'historical-sector-pe',
+				{
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async industryPriceEarningsHistory<S extends MarketSector = MarketSector>({
-		options,
-	}: {
-		options: IndustryOptions<S>;
-	}): Promise<IndustryPriceEarningsArr> {
-		const query = buildQuery('historical-industry-pe', {
-			...options,
-		});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async industryPriceEarningsHistory<S extends MarketSector = MarketSector>({
+			options,
+		}: {
+			options: IndustryOptions<S>;
+		}): Promise<IndustryPriceEarningsArr> {
+			const query = buildQuery(
+				'historical-industry-pe',
+				{
+					...options,
+				},
+				apiKey
+			);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async biggestLosers(): Promise<BiggestLosersArr> {
-		const query = buildQuery('biggest-losers', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async biggestLosers(): Promise<BiggestLosersArr> {
+			const query = buildQuery('biggest-losers', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async biggestGainers(): Promise<BiggestGainersArr> {
-		const query = buildQuery('biggest-gainers', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
+		async biggestGainers(): Promise<BiggestGainersArr> {
+			const query = buildQuery('biggest-gainers', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
 
-	async mostActive(): Promise<MostActiveArr> {
-		const query = buildQuery('most-actives', {});
-		const response = await fetch(query);
-		return await response.json();
-	},
-};
+		async mostActive(): Promise<MostActiveArr> {
+			const query = buildQuery('most-actives', {}, apiKey);
+			const response = await fetch(query);
+			return await response.json();
+		},
+	};
+}
 
 export interface MarketSectorPerformance {
 	date: Date;

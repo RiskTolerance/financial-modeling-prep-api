@@ -2,6 +2,9 @@ import { describe, it, expect } from 'vitest';
 import { TechnicalAPI } from './technical-indicators.js';
 import dayjs from 'dayjs';
 
+const apiKey = process.env.FMP_API_KEY!;
+const technicalApi = TechnicalAPI(apiKey);
+
 // Skip all tests if FMP_API_KEY is not set
 const runTests = process.env.FMP_API_KEY ? describe : describe.skip;
 
@@ -23,7 +26,7 @@ runTests(
 			};
 
 			it('should fetch Simple Moving Average (SMA)', async () => {
-				const result = await TechnicalAPI.simpleMovingAverage(
+				const result = await technicalApi.simpleMovingAverage(
 					TEST_SYMBOL,
 					commonOptions
 				);
@@ -38,7 +41,7 @@ runTests(
 			});
 
 			it('should fetch Exponential Moving Average (EMA)', async () => {
-				const result = await TechnicalAPI.exponentialMovingAverage(
+				const result = await technicalApi.exponentialMovingAverage(
 					TEST_SYMBOL,
 					commonOptions
 				);
@@ -53,7 +56,7 @@ runTests(
 			});
 
 			it('should fetch Weighted Moving Average (WMA)', async () => {
-				const result = await TechnicalAPI.weightedMovingAverage(
+				const result = await technicalApi.weightedMovingAverage(
 					TEST_SYMBOL,
 					commonOptions
 				);
@@ -68,7 +71,7 @@ runTests(
 			});
 
 			it('should fetch Double Exponential Moving Average (DEMA)', async () => {
-				const result = await TechnicalAPI.doubleExponentialMovingAverage(
+				const result = await technicalApi.doubleExponentialMovingAverage(
 					TEST_SYMBOL,
 					commonOptions
 				);
@@ -83,7 +86,7 @@ runTests(
 			});
 
 			it('should fetch Triple Exponential Moving Average (TEMA)', async () => {
-				const result = await TechnicalAPI.tripleExponentialMovingAverage(
+				const result = await technicalApi.tripleExponentialMovingAverage(
 					TEST_SYMBOL,
 					commonOptions
 				);
@@ -107,7 +110,7 @@ runTests(
 			};
 
 			it('should fetch Relative Strength Index (RSI)', async () => {
-				const result = await TechnicalAPI.relativeStrengthIndex(
+				const result = await technicalApi.relativeStrengthIndex(
 					TEST_SYMBOL,
 					commonOptions
 				);
@@ -125,7 +128,7 @@ runTests(
 			});
 
 			it('should fetch Williams %R', async () => {
-				const result = await TechnicalAPI.williamsR(TEST_SYMBOL, commonOptions);
+				const result = await technicalApi.williamsR(TEST_SYMBOL, commonOptions);
 
 				expect(Array.isArray(result)).toBe(true);
 				expect(result.length).toBeGreaterThan(0);
@@ -142,7 +145,7 @@ runTests(
 
 		describe('Trend Indicators', () => {
 			it('should fetch Average Directional Index (ADX)', async () => {
-				const result = await TechnicalAPI.averageDirectionalIndex(TEST_SYMBOL, {
+				const result = await technicalApi.averageDirectionalIndex(TEST_SYMBOL, {
 					periodLength: TEST_PERIOD,
 					timeframe: TEST_TIMEFRAME,
 					from: TEST_FROM,
@@ -164,7 +167,7 @@ runTests(
 
 		describe('Volatility Indicators', () => {
 			it('should fetch Standard Deviation', async () => {
-				const result = await TechnicalAPI.standardDeviation(TEST_SYMBOL, {
+				const result = await technicalApi.standardDeviation(TEST_SYMBOL, {
 					periodLength: TEST_PERIOD,
 					timeframe: TEST_TIMEFRAME,
 					from: TEST_FROM,
@@ -183,7 +186,7 @@ runTests(
 
 		describe('Quote', () => {
 			it('should fetch current quote', async () => {
-				const result = await TechnicalAPI.quote(TEST_SYMBOL);
+				const result = await technicalApi.quote(TEST_SYMBOL);
 
 				expect(Array.isArray(result)).toBe(true);
 				expect(result.length).toBe(1);

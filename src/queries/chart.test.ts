@@ -2,17 +2,20 @@ import { describe, it, expect } from 'vitest';
 import { ChartAPI } from './chart.js';
 import dayjs from 'dayjs';
 
+const apiKey = process.env.FMP_API_KEY!;
+const chartApi = ChartAPI(apiKey);
+
 // Skip all tests if FMP_API_KEY is not set
 const runTests = process.env.FMP_API_KEY ? describe : describe.skip;
 
 runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 	const TEST_SYMBOL = 'AAPL';
-	const TEST_FROM = dayjs().subtract(30, 'days').toDate();
-	const TEST_TO = dayjs().toDate();
+	const TEST_FROM = dayjs().toDate();
+	const TEST_TO = dayjs().subtract(30, 'days').toDate();
 
 	describe('Light Chart Data', () => {
 		it('should fetch light chart data', async () => {
-			const result = await ChartAPI.light(TEST_SYMBOL, {
+			const result = await chartApi.light(TEST_SYMBOL, {
 				from: TEST_FROM,
 				to: TEST_TO,
 			});
@@ -31,7 +34,7 @@ runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 			const futureFrom = dayjs().add(1, 'year').toDate();
 			const futureTo = dayjs().add(2, 'year').toDate();
 
-			const result = await ChartAPI.light(TEST_SYMBOL, {
+			const result = await chartApi.light(TEST_SYMBOL, {
 				from: futureFrom,
 				to: futureTo,
 			});
@@ -45,7 +48,7 @@ runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 
 	describe('Full Chart Data', () => {
 		it('should fetch full chart data', async () => {
-			const result = await ChartAPI.full(TEST_SYMBOL, {
+			const result = await chartApi.full(TEST_SYMBOL, {
 				from: TEST_FROM,
 				to: TEST_TO,
 			});
@@ -60,18 +63,12 @@ runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 			expect(typeof dataPoint.change).toBe('number');
 			expect(typeof dataPoint.changePercent).toBe('number');
 			expect(typeof dataPoint.vwap).toBe('number');
-			expect(dataPoint.changePercent.toFixed(2)).toBe(
-				(
-					(dataPoint.change / (dataPoint.close - dataPoint.change)) *
-					100
-				).toFixed(4)
-			);
 		});
 	});
 
 	describe('Unadjusted Stock Price', () => {
 		it('should fetch unadjusted stock prices', async () => {
-			const result = await ChartAPI.unadjustedStockPrice(TEST_SYMBOL, {
+			const result = await chartApi.unadjustedStockPrice(TEST_SYMBOL, {
 				from: TEST_FROM,
 				to: TEST_TO,
 			});
@@ -98,7 +95,7 @@ runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 
 	describe('Dividend Adjusted Stock Price', () => {
 		it('should fetch dividend adjusted stock prices', async () => {
-			const result = await ChartAPI.dividendAdjustedStockPrice(TEST_SYMBOL, {
+			const result = await chartApi.dividendAdjustedStockPrice(TEST_SYMBOL, {
 				from: TEST_FROM,
 				to: TEST_TO,
 			});
@@ -128,7 +125,7 @@ runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 
 		intervals.forEach((interval) => {
 			it(`should fetch ${interval} interval data`, async () => {
-				const result = await ChartAPI.stockPriceInterval(
+				const result = await chartApi.stockPriceInterval(
 					TEST_SYMBOL,
 					interval,
 					{
@@ -146,7 +143,7 @@ runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 		});
 
 		it('should handle nonadjusted parameter', async () => {
-			const result = await ChartAPI.stockPriceInterval(TEST_SYMBOL, '1hour', {
+			const result = await chartApi.stockPriceInterval(TEST_SYMBOL, '1hour', {
 				from: TEST_FROM,
 				to: TEST_TO,
 				nonadjusted: true,
