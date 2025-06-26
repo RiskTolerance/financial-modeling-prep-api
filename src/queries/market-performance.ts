@@ -1,4 +1,4 @@
-import { buildQuery } from '../_query-builder';
+import { buildQuery } from '../_query-builder.js';
 
 // repeat the type pattern for market/sector that was used in search.ts
 import type { IndustryForSector, MarketSector } from './search.ts';

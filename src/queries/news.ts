@@ -1,4 +1,4 @@
-import { buildQuery } from '../_query-builder';
+import { buildQuery } from '../_query-builder.js';
 
 export const NewsAPI = {
 	/**
