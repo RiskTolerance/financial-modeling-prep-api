@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export const buildQuery = (
 	endpoint: string,
 	options: Record<string, any>,
@@ -8,11 +10,16 @@ export const buildQuery = (
 	(() => {
 		for (const [key, value] of Object.entries(options)) {
 			if (value !== undefined) {
-				queryParamString += `${key}=${value}&`;
+				if (value instanceof Date) {
+					console.log(dayjs(value).format('YYYY-DD-MM'));
+					queryParamString += `${key}=${dayjs(value).format('YYYY-DD-MM')}&`;
+				} else {
+					queryParamString += `${key}=${value}&`;
+				}
 			}
 		}
 	})();
-	const query = `${baseUrl}?${queryParamString}&apikey=${apiKey}`;
+	const query = `${baseUrl}?${queryParamString}apikey=${apiKey}`;
 	console.log(query);
 	return query;
 };

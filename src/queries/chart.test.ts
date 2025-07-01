@@ -10,8 +10,10 @@ const runTests = process.env.FMP_API_KEY ? describe : describe.skip;
 
 runTests('Financial Modeling Prep - Chart API Integration Tests', () => {
 	const TEST_SYMBOL = 'AAPL';
-	const TEST_FROM = dayjs().toDate();
-	const TEST_TO = dayjs().subtract(30, 'days').toDate();
+	const TEST_FROM = dayjs().subtract(30, 'days').toDate();
+	const TEST_TO = dayjs().toDate();
+
+	console.log(TEST_FROM, TEST_TO);
 
 	describe('Light Chart Data', () => {
 		it('should fetch light chart data', async () => {

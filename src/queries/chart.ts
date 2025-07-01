@@ -78,12 +78,7 @@ export function ChartAPI(apiKey: string) {
 		): Promise<StockPriceIntervalArr> {
 			const query = buildQuery(
 				`historical-chart/${interval}`,
-				{
-					symbol,
-					from: dayjs(options.from).format('YYYY-MM-DD'),
-					to: dayjs(options.to).format('YYYY-MM-DD'),
-					nonadjusted: options.nonadjusted,
-				},
+				{ symbol, interval, ...options },
 				apiKey
 			);
 			const response = await fetch(query);
