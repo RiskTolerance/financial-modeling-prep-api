@@ -3,23 +3,29 @@ import { buildQuery } from '../_query-builder.js';
 export function InsiderTradesAPI(apiKey: string) {
 	return {
 		async searchInsiderTrades({
+			symbol,
 			options,
 		}: {
+			symbol: string;
 			options: InsiderTradeQueryOptions;
 		}): Promise<InsiderTradesArr> {
 			const query = buildQuery(
 				'insider-trading/search',
-				{ ...options },
+				{ symbol, ...options },
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (InsiderTrades.searchInsiderTrades): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};
 }
 
 type InsiderTradeQueryOptions = {
-	symbol?: string;
 	from?: Date;
 	to?: Date;
 	reportingCik?: string;

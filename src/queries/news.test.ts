@@ -60,28 +60,6 @@ runTests('Financial Modeling Prep - News API Integration Tests', () => {
 		});
 	});
 
-	describe('Press Releases', () => {
-		it('should fetch press releases for a symbol', async () => {
-			const result = await newsApi.pressReleases(TEST_SYMBOL, {
-				from: TEST_FROM,
-				to: TEST_TO,
-				page: 0,
-				limit: 10,
-			});
-
-			expect(Array.isArray(result)).toBe(true);
-
-			if (result.length > 0) {
-				const release = result[0];
-				expect(release.symbol).toBe(TEST_SYMBOL);
-				expect(release.publisher).toBeTruthy();
-				expect(release.title).toBeTruthy();
-				expect(release.text).toBeTruthy();
-				expect(release.url.startsWith('http')).toBe(true);
-			}
-		});
-	});
-
 	describe('Price Target News', () => {
 		it('should fetch price target updates', async () => {
 			const result = await newsApi.priceTargetNews(TEST_SYMBOL, 10);

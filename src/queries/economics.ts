@@ -5,12 +5,17 @@ export function EconomicsAPI(apiKey: string) {
 		async treasuryRates() {
 			const query = buildQuery('treasury-rates', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Economics.treasuryRates): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
 		async economicIndicators(
 			name: EconomicIndicatorNameOptions,
-			options: { from: Date; to: Date }
+			options: { from?: Date; to?: Date }
 		) {
 			const query = buildQuery(
 				'economic-indicators',
@@ -21,6 +26,11 @@ export function EconomicsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Economics.economicIndicators): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};

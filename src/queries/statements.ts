@@ -18,6 +18,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.incomeStatement): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -37,6 +42,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.cashFlowStatement): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -75,6 +85,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.keyMetrics): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -94,6 +109,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.financialRatios): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -106,6 +126,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.keyMetricsTtm): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -118,6 +143,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.financialRatiosTtm): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -130,6 +160,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.financialScores): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -146,6 +181,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.ownerEarnings): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -164,6 +204,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.enterpriseValues): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -182,6 +227,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.incomeStatementGrowth): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -200,6 +250,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.balanceSheetGrowth): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -218,6 +273,11 @@ export function StatementsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Statements.cashFlowStatementGrowth): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};

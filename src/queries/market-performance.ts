@@ -20,8 +20,8 @@ export function MarketPerformanceAPI(apiKey: string) {
 		async marketSectorPerformanceHistory(
 			from: Date,
 			to: Date,
-			exchange: 'NASDAQ' | 'NYSE' | 'AMEX',
-			sector: MarketSector
+			exchange?: 'NASDAQ' | 'NYSE' | 'AMEX',
+			sector?: MarketSector
 		): Promise<MarketSectorPerformanceArr> {
 			const query = buildQuery(
 				'historical-sector-performance',
@@ -34,6 +34,11 @@ export function MarketPerformanceAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (MarketPerformance.marketSectorPerformanceHistory): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -50,6 +55,11 @@ export function MarketPerformanceAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (MarketPerformance.sectorPriceEarningsHistory): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -82,24 +92,44 @@ export function MarketPerformanceAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (MarketPerformance.mostActive): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
 		async biggestLosers(): Promise<BiggestLosersArr> {
 			const query = buildQuery('biggest-losers', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (MarketPerformance.biggestLosers): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
 		async biggestGainers(): Promise<BiggestGainersArr> {
 			const query = buildQuery('biggest-gainers', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (MarketPerformance.biggestGainers): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
 		async mostActive(): Promise<MostActiveArr> {
 			const query = buildQuery('most-actives', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (MarketPerformance.mostActive): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};

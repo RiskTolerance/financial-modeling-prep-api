@@ -7,7 +7,6 @@ const insiderApi = InsiderTradesAPI(apiKey);
 
 const TEST_SYMBOL = 'AAPL';
 const TEST_OPTIONS = {
-	symbol: TEST_SYMBOL,
 	from: new Date('2024-01-01'),
 	to: new Date('2024-01-31'),
 	reportingCik: '0000320193',
@@ -47,7 +46,8 @@ describe('InsiderTradesAPI', () => {
 	it('should fetch insider trades for a symbol', async () => {
 		const fetchMock = mockFetch([]);
 		const result = await insiderApi.searchInsiderTrades({
-			options: { symbol: TEST_SYMBOL },
+			symbol: TEST_SYMBOL,
+			options: TEST_OPTIONS,
 		});
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(Array.isArray(result)).toBe(true);
@@ -56,6 +56,7 @@ describe('InsiderTradesAPI', () => {
 	it('should fetch insider trades with multiple options', async () => {
 		const fetchMock = mockFetch(mockInsiderTrades);
 		const result = await insiderApi.searchInsiderTrades({
+			symbol: TEST_SYMBOL,
 			options: TEST_OPTIONS,
 		});
 		expect(fetchMock).toHaveBeenCalledOnce();
@@ -66,7 +67,10 @@ describe('InsiderTradesAPI', () => {
 		const error = new Error('Network error');
 		const spy = vi.spyOn(global, 'fetch').mockRejectedValue(error);
 		await expect(
-			insiderApi.searchInsiderTrades({ options: { symbol: TEST_SYMBOL } })
+			insiderApi.searchInsiderTrades({
+				symbol: TEST_SYMBOL,
+				options: TEST_OPTIONS,
+			})
 		).rejects.toThrow('Network error');
 		spy.mockRestore();
 	});

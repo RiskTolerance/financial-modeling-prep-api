@@ -5,21 +5,29 @@ export function CompanyAPI(apiKey: string) {
 		async profile(symbol: string): Promise<CompanyProfileArr> {
 			const query = buildQuery('profile', { symbol }, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(`API error (Company.profile): ${response.statusText}`);
+			}
 			return await response.json();
 		},
 
 		async employeeCount(
 			symbol: string,
-			limit: number
+			limit?: number
 		): Promise<CompanyEmployeeCountArr> {
 			const query = buildQuery('employee-count', { symbol, limit }, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Company.employeeCount): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
 		async historicalEmployeeCount(
 			symbol: string,
-			limit: number
+			limit?: number
 		): Promise<HistoricalCompanyEmployeeCountArr> {
 			const query = buildQuery(
 				'historical-employee-count',
@@ -27,12 +35,44 @@ export function CompanyAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Company.historicalEmployeeCount): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
 		async marketCap(symbol: string): Promise<CompanyMarketCapArr> {
 			const query = buildQuery('market-capitalization', { symbol }, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Company.marketCap): ${response.statusText}`
+				);
+			}
+			return await response.json();
+		},
+
+		async historicalMarketCap(
+			symbol: string,
+			options: {
+				limit?: number;
+				from?: Date;
+				to?: Date;
+			}
+		): Promise<HistoricalCompanyMarketCapArr> {
+			const query = buildQuery(
+				'historical-market-capitalization',
+				{ symbol, ...options },
+				apiKey
+			);
+			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Company.historicalMarketCap): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};
@@ -115,3 +155,11 @@ export interface CompanyMarketCap {
 }
 
 export type CompanyMarketCapArr = CompanyMarketCap[];
+
+export interface HistoricalCompanyMarketCap {
+	symbol: string;
+	date: Date;
+	marketCap: number;
+}
+
+export type HistoricalCompanyMarketCapArr = HistoricalCompanyMarketCap[];

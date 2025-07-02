@@ -9,12 +9,12 @@ export function AnalystAPI(apiKey: string) {
 		 */
 		async financialEstimates(
 			symbol: string,
-			options: {
-				page: number;
-				limit: number;
+			options?: {
+				page?: number;
+				limit?: number;
 			}
 		): Promise<FinancialEstimatesArr> {
-			if (options.limit >= 10) {
+			if (options?.limit && options.limit >= 10) {
 				throw new Error('Limit must be less than 10');
 			}
 			const query = buildQuery(
@@ -57,7 +57,7 @@ export function AnalystAPI(apiKey: string) {
 		 */
 		async historicalRatings(
 			symbol: string,
-			limit: number
+			limit?: number
 		): Promise<HistoricalRatingsArr> {
 			const query = buildQuery(
 				'ratings-historical',
@@ -150,7 +150,7 @@ export function AnalystAPI(apiKey: string) {
 		 */
 		async stockGradeHistory(
 			symbol: string,
-			limit: number
+			limit?: number
 		): Promise<StockGradesHistoryArr> {
 			const query = buildQuery(
 				'grades-historical',

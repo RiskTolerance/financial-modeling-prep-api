@@ -26,6 +26,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.simpleMovingAverage): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 		/**
@@ -52,6 +57,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.exponentialMovingAverage): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -79,6 +89,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.weightedMovingAverage): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -106,6 +121,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.doubleExponentialMovingAverage): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -133,6 +153,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.tripleExponentialMovingAverage): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -160,6 +185,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.relativeStrengthIndex): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -187,6 +217,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.standardDeviation): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -214,6 +249,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.williamsR): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -241,6 +281,11 @@ export function TechnicalAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.averageDirectionalIndex): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -253,6 +298,11 @@ export function TechnicalAPI(apiKey: string) {
 		async quote(symbol: string): Promise<QuoteArr> {
 			const query = buildQuery('quote', { symbol }, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (TechnicalIndicators.quote): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};

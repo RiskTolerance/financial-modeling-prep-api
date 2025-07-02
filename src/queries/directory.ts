@@ -5,26 +5,51 @@ export function DirectoryAPI(apiKey: string) {
 		async companySymbolList() {
 			const query = buildQuery('stock-list', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Directory.companySymbolList): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 		async companyFinancialSymbolList() {
 			const query = buildQuery('financial-statement-symbol-list', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Directory.companyFinancialSymbolList): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 		async activelyTradingList() {
 			const query = buildQuery('actively-trading-list', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Directory.activelyTradingList): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 		async availableSectors() {
 			const query = buildQuery('available-sectors', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Directory.availableSectors): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 		async availableIndustries() {
 			const query = buildQuery('available-industries', {}, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Directory.availableIndustries): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};

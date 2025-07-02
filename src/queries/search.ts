@@ -33,6 +33,11 @@ export function SearchAPI(apiKey: string) {
 		}): Promise<ScreenerResultArr> {
 			const query = buildQuery('company-screener', options, apiKey);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (Search.stockScreener): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};

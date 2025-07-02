@@ -8,10 +8,10 @@ export function NewsAPI(apiKey: string) {
 		async stockNews(
 			symbol: string,
 			options: {
-				from: Date;
-				to: Date;
-				page: number;
-				limit: number;
+				from?: Date;
+				to?: Date;
+				page?: number;
+				limit?: number;
 			}
 		): Promise<StockNewsArr> {
 			const query = buildQuery(
@@ -23,30 +23,9 @@ export function NewsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
-			return await response.json();
-		},
-
-		/**
-		 * @returns The press releases for the given symbol.
-		 */
-		async pressReleases(
-			symbol: string,
-			options: {
-				from: Date;
-				to: Date;
-				page: number;
-				limit: number;
+			if (!response.ok) {
+				throw new Error(`API error (News.stockNews): ${response.statusText}`);
 			}
-		): Promise<PressReleaseArr> {
-			const query = buildQuery(
-				'press-releases',
-				{
-					symbol,
-					...options,
-				},
-				apiKey
-			);
-			const response = await fetch(query);
 			return await response.json();
 		},
 
@@ -68,6 +47,11 @@ export function NewsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (News.priceTargetNews): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 
@@ -87,12 +71,15 @@ export function NewsAPI(apiKey: string) {
 				apiKey
 			);
 			const response = await fetch(query);
+			if (!response.ok) {
+				throw new Error(
+					`API error (News.stockGradeNews): ${response.statusText}`
+				);
+			}
 			return await response.json();
 		},
 	};
 }
-
-// VANILLA TYPESCRIPT TYPES ------------------------------------------------------------
 
 export interface StockNews {
 	symbol: string;
@@ -105,18 +92,6 @@ export interface StockNews {
 	url: string;
 }
 export type StockNewsArr = StockNews[];
-
-export interface PressRelease {
-	symbol: string;
-	publishedDate: string | Date;
-	publisher: string;
-	title: string;
-	image: string;
-	site: string;
-	text: string;
-	url: string;
-}
-export type PressReleaseArr = PressRelease[];
 
 export interface PriceTargetNews {
 	symbol: string;
