@@ -101,7 +101,7 @@ export function StatementsAPI(apiKey: string) {
 			}
 		): Promise<FinancialRatiosArr> {
 			const query = buildQuery(
-				'financial-ratios',
+				'ratios',
 				{
 					symbol,
 					...options,
