@@ -45,20 +45,20 @@ describe('InsiderTradesAPI', () => {
 
 	it('should fetch insider trades for a symbol', async () => {
 		const fetchMock = mockFetch([]);
-		const result = await insiderApi.searchInsiderTrades({
-			symbol: TEST_SYMBOL,
-			options: TEST_OPTIONS,
-		});
+		const result = await insiderApi.searchInsiderTrades(
+			TEST_SYMBOL,
+			TEST_OPTIONS
+		);
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(Array.isArray(result)).toBe(true);
 	});
 
 	it('should fetch insider trades with multiple options', async () => {
 		const fetchMock = mockFetch(mockInsiderTrades);
-		const result = await insiderApi.searchInsiderTrades({
-			symbol: TEST_SYMBOL,
-			options: TEST_OPTIONS,
-		});
+		const result = await insiderApi.searchInsiderTrades(
+			TEST_SYMBOL,
+			TEST_OPTIONS
+		);
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(result).toEqual(mockInsiderTrades);
 	});
@@ -67,10 +67,7 @@ describe('InsiderTradesAPI', () => {
 		const error = new Error('Network error');
 		const spy = vi.spyOn(global, 'fetch').mockRejectedValue(error);
 		await expect(
-			insiderApi.searchInsiderTrades({
-				symbol: TEST_SYMBOL,
-				options: TEST_OPTIONS,
-			})
+			insiderApi.searchInsiderTrades(TEST_SYMBOL, TEST_OPTIONS)
 		).rejects.toThrow('Network error');
 		spy.mockRestore();
 	});

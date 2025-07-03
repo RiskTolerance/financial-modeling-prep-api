@@ -2,13 +2,10 @@ import { buildQuery } from '../_query-builder.js';
 
 export function InsiderTradesAPI(apiKey: string) {
 	return {
-		async searchInsiderTrades({
-			symbol,
-			options,
-		}: {
-			symbol: string;
-			options: InsiderTradeQueryOptions;
-		}): Promise<InsiderTradesArr> {
+		async searchInsiderTrades(
+			symbol: string,
+			options: InsiderTradeQueryOptions
+		): Promise<InsiderTradesArr> {
 			const query = buildQuery(
 				'insider-trading/search',
 				{ symbol, ...options },

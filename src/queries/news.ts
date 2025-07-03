@@ -29,7 +29,7 @@ export function NewsAPI(apiKey: string) {
 			return await response.json();
 		},
 
-		// The following endpoints are technically under the analyst catagory, but they fit in the news catagory better.
+		// The following endpoints are technically under the analyst category, but they fit in the news category better.
 
 		/**
 		 * @returns The price target news for the given symbol.

@@ -2,8 +2,8 @@ import { buildQuery } from '../_query-builder.js';
 
 export function EconomicsAPI(apiKey: string) {
 	return {
-		async treasuryRates() {
-			const query = buildQuery('treasury-rates', {}, apiKey);
+		async treasuryRates(options?: { from?: Date; to?: Date }) {
+			const query = buildQuery('treasury-rates', { ...options }, apiKey);
 			const response = await fetch(query);
 			if (!response.ok) {
 				throw new Error(
@@ -15,7 +15,7 @@ export function EconomicsAPI(apiKey: string) {
 
 		async economicIndicators(
 			name: EconomicIndicatorNameOptions,
-			options: { from?: Date; to?: Date }
+			options?: { from?: Date; to?: Date }
 		) {
 			const query = buildQuery(
 				'economic-indicators',
